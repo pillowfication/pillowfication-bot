@@ -13,7 +13,6 @@ const tones = {
   Ü: {1: 'Ǖ', 2: 'Ǘ', 3: 'Ǚ', 4: 'Ǜ'}
 };
 
-
 module.exports = {
   init(me) {
     const command = `${me.prefix}mand`;
@@ -23,7 +22,7 @@ module.exports = {
       if (message.author.id !== me.id)
         return;
       const content = message.content.match(regex);
-      if (!content)
+      if (!content || !content[1])
         return;
 
       message.edit(

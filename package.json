@@ -19,8 +19,9 @@
   "dependencies": {
     "discord.js": "^11.0.0",
     "jsonfile": "^2.4.0",
-    "mathjax-node-svg2png": "^1.0.2",
-    "prompt": "^1.0.0"
+    "mathjax-node": "^1.0.0",
+    "prompt": "^1.0.0",
+    "svg2png": "^4.1.1"
   },
   "devDependencies": {
     "eslint": "^3.18.0",

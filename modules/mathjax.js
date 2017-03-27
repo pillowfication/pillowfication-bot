@@ -1,4 +1,4 @@
-const mathjax = require('mathjax-node-svg2png');
+const mathjax = require('mathjax-node');
 const svg2png = require('svg2png');
 
 const dump = '295816771858989056';
@@ -10,7 +10,7 @@ mathjax.config({
 function render(math, cb) {
   mathjax.typeset({
     math: math,
-    png: true
+    svg: true
   }, data => {
     svg2png(data.svg, {height: 80}).then(cb);
   });
@@ -18,30 +18,28 @@ function render(math, cb) {
 
 module.exports = {
   init(me) {
-    const command = `${me.prefix}math`;
-    const regex = /`(.*?)`/;
+    const regex = new RegExp(`^${me.prefix}math\\s+\`(.*?)\``);
 
     me.on('message', message => {
       if (message.author.id !== me.id)
         return;
-      if (!message.content.startsWith(command))
+      const math = message.content.match(regex);
+      if (!math || !math[1])
         return;
 
-      const math = message.content.match(regex);
-      if (math && math[1])
-        render(math[1], buffer => {
-          me.channels.get(dump).sendFile(buffer)
-            .then(upload => {
-              message.edit(message.content, {
-                embed: {
-                  image: {url: upload.attachments.first().url}
-                }
-              })
-              .then(() => {
-                upload.delete();
-              });
+      render(math[1], buffer => {
+        me.channels.get(dump).sendFile(buffer)
+          .then(upload => {
+            message.edit(message.content, {
+              embed: {
+                image: {url: upload.attachments.first().url}
+              }
+            })
+            .then(() => {
+              upload.delete();
             });
-        });
+          });
+      });
     });
   }
 };
