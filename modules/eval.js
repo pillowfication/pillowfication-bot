@@ -1,15 +1,15 @@
 module.exports = {
-  init(bot) {
-    const command = `${bot.prefix}eval`;
-    const regex = /`(.*?)`/;
+  init(me) {
+    const _command = `${me.prefix}eval`;
+    const _regex = /`(.*?)`/;
 
-    bot.on('message', message => {
-      if (message.author.id !== bot.me)
+    me.on('message', message => {
+      if (message.author.id !== me.id)
         return;
-      if (!message.content.startsWith(command))
+      if (!message.content.startsWith(_command))
         return;
 
-      const _code = message.content.match(regex);
+      const _code = message.content.match(_regex);
       if (_code && _code[1]) {
         let _output;
         try {

@@ -2,20 +2,20 @@ const Discord = require('discord.js');
 const Constants = require('discord.js/src/util/Constants');
 const config = require('./config.json');
 
-const bot = new Discord.Client();
-bot.prefix = '~/';
-bot.me = '144761456645242880';
+const me = new Discord.Client();
+me.prefix = '~/';
+me.id = '144761456645242880';
 
 [
   require('./modules/eval')
 ]
-.forEach(mod => mod.init(bot));
+.forEach(mod => mod.init(me));
 
-bot.on('ready', () => {
-  console.log('user-bot online');
+me.on('ready', () => {
+  console.log('userbot online');
 });
 
-bot.loginEmailPassword = function(email, password) {
+me.loginEmailPassword = function(email, password) {
   return new Promise((resolve, reject) => {
     this.rest.client.email = email;
     this.rest.client.password = password;
@@ -27,4 +27,4 @@ bot.loginEmailPassword = function(email, password) {
   });
 };
 
-bot.loginEmailPassword(config.email, config.password);
+me.loginEmailPassword(config.email, config.password);
