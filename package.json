@@ -17,13 +17,10 @@
   },
   "main": "index.js",
   "dependencies": {
-    "async": "^2.1.5",
-    "cheerio": "^0.22.0",
     "discord.js": "^11.0.0",
     "jsonfile": "^2.4.0",
-    "moment": "^2.18.0",
-    "prompt": "^1.0.0",
-    "request": "^2.81.0"
+    "mathjax-node-svg2png": "^1.0.2",
+    "prompt": "^1.0.0"
   },
   "devDependencies": {
     "eslint": "^3.18.0",

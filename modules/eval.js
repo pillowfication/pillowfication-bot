@@ -1,5 +1,6 @@
 module.exports = {
   init(me) {
+    // '_'-prefix variables to prevent accidental `eval` abuse
     const _command = `${me.prefix}eval`;
     const _regex = /`(.*?)`/;
 
@@ -18,7 +19,7 @@ module.exports = {
           _output = e;
         }
 
-        message.edit([message.content, `\`\`\`${_output}\`\`\``]);
+        message.edit(`${message.content}\n\`\`\`${_output}\`\`\``);
       }
     });
   }

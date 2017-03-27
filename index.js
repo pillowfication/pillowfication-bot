@@ -3,11 +3,12 @@ const Constants = require('discord.js/src/util/Constants');
 const config = require('./config.json');
 
 const me = new Discord.Client();
-me.prefix = '~/';
 me.id = '144761456645242880';
+me.prefix = '~/';
 
 [
-  require('./modules/eval')
+  require('./modules/eval'),
+  require('./modules/mathjax')
 ]
 .forEach(mod => mod.init(me));
 
