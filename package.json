@@ -1,0 +1,32 @@
+{
+  "name": "pillowfication-bot",
+  "version": "0.0.0",
+  "description": "pillowfication-bot",
+  "author": {
+    "name": "Markus Tran",
+    "email": "thebluepillow@gmail.com",
+    "url": "http://pillowfication.com"
+  },
+  "homepage": "https://github.com/pillowfication/pillowfication-bot",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pillowfication/pillowfication-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pillowfication/pillowfication-bot/issues"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "async": "^2.1.5",
+    "cheerio": "^0.22.0",
+    "discord.js": "^11.0.0",
+    "jsonfile": "^2.4.0",
+    "moment": "^2.18.0",
+    "prompt": "^1.0.0",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.18.0",
+    "eslint-config-pf": "^1.0.6"
+  }
+}
