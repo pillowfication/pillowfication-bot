@@ -17,7 +17,7 @@ module.exports = {
         _output = e;
       }
 
-      message.edit(`${message.content}\n\`\`\`${_output}\`\`\``);
+      message.edit(`${message.content}\n\`\`\`js\n${_output}\n\`\`\``);
     });
   }
 };

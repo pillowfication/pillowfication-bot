@@ -9,7 +9,8 @@ me.prefix = '~/';
 [
   require('./modules/eval'),
   require('./modules/mathjax'),
-  require('./modules/pinyin')
+  require('./modules/pinyin'),
+  require('./modules/exit')
 ]
 .forEach(mod => mod.init(me));
 

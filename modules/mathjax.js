@@ -1,20 +1,9 @@
 const mathjax = require('mathjax-node');
 const svg2png = require('svg2png');
 
-const dump = '295816771858989056';
+const EX = 12;
 
-mathjax.config({
-  displayErrors: false
-});
-
-function render(math, cb) {
-  mathjax.typeset({
-    math: math,
-    svg: true
-  }, data => {
-    svg2png(data.svg, {height: 80}).then(cb);
-  });
-}
+mathjax.config({displayErrors: true});
 
 module.exports = {
   init(me) {
@@ -27,18 +16,17 @@ module.exports = {
       if (!math || !math[1])
         return;
 
-      render(math[1], buffer => {
-        me.channels.get(dump).sendFile(buffer)
-          .then(upload => {
-            message.edit(message.content, {
-              embed: {
-                image: {url: upload.attachments.first().url}
-              }
-            })
-            .then(() => {
-              upload.delete();
-            });
-          });
+      mathjax.typeset({
+        math: math[1],
+        ex: EX,
+        svg: true
+      }, data => {
+        svg2png(data.svg, {
+          width: parseFloat(data.width) * EX + 10 || 10,
+          height: parseFloat(data.height) * EX + 10 || 10
+        }).then(buffer => {
+          message.channel.sendFile(buffer);
+        });
       });
     });
   }
