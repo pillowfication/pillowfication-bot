@@ -22,8 +22,8 @@ module.exports = {
         svg: true
       }, data => {
         svg2png(data.svg, {
-          width: parseFloat(data.width) * EX + 10 || 10,
-          height: parseFloat(data.height) * EX + 10 || 10
+          width: parseFloat(data.width) * EX || 10,
+          height: parseFloat(data.height) * EX || 10
         }).then(buffer => {
           message.channel.sendFile(buffer);
         });
