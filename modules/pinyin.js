@@ -13,6 +13,42 @@ const tones = {
   Ü: {1: 'Ǖ', 2: 'Ǘ', 3: 'Ǚ', 4: 'Ǜ'}
 };
 
+function addTone(word) {
+  const chars = Array.from(word);
+  const tone = chars.pop();
+  if (tone !== '1' && tone !== '2' && tone !== '3' && tone !== '4')
+    return word;
+
+  // 1. 'A' and 'E' always take the tone mark
+  for (let i = 0; i < chars.length; ++i) {
+    const char = chars[i];
+    if (char === 'a' || char === 'A' || char === 'e' || char === 'E') {
+      chars[i] = tones[char][tone];
+      return chars.join('');
+    }
+  }
+
+  // 2. In 'OU', 'O' takes the tone mark
+  for (let i = 0; i < chars.length - 1; ++i) {
+    const [curr, next] = [chars[i], chars[i + 1]];
+    if ((curr === 'o' || curr === 'O') && (next === 'u' || next === 'U')) {
+      chars[i] = tones[curr][tone];
+      return chars.join('');
+    }
+  }
+
+  // 3. The final vowel takes the tone mark
+  for (let i = chars.length - 1; i >= 0; --i) {
+    const map = tones[chars[i]];
+    if (map) {
+      chars[i] = map[tone];
+      return chars.join('');
+    }
+  }
+
+  return word;
+}
+
 module.exports = {
   init(me) {
     const command = `${me.prefix}mand`;
@@ -25,48 +61,22 @@ module.exports = {
       if (!content || !content[1])
         return;
 
-      message.edit(
-        content[1]
-          .replace(/u:/g, 'ü')
-          .replace(/U:/g, 'Ü')
-          .split(/([a-zü]+[0-9]+)/gi)
-          .map(word => {
-            const chars = Array.from(word);
-            const tone = chars.pop();
-            if (tone !== '1' && tone !== '2' && tone !== '3' && tone !== '4')
-              return word;
-
-            // 1. 'A' and 'E' always take the tone mark
-            for (let i = 0; i < chars.length; ++i) {
-              const char = chars[i];
-              if (char === 'a' || char === 'A' || char === 'e' || char === 'E') {
-                chars[i] = tones[char][tone];
-                return chars.join('');
-              }
-            }
-
-            // 2. In 'OU', 'O' takes the tone mark
-            for (let i = 0; i < chars.length - 1; ++i) {
-              const [curr, next] = [chars[i], chars[i + 1]];
-              if ((curr === 'o' || curr === 'O') && (next === 'u' || next === 'U')) {
-                chars[i] = tones[curr][tone];
-                return chars.join('');
-              }
-            }
-
-            // 3. The final vowel takes the tone mark
-            for (let i = chars.length - 1; i >= 0; --i) {
-              const map = tones[chars[i]];
-              if (map) {
-                chars[i] = map[tone];
-                return chars.join('');
-              }
-            }
-
-            return word;
-          })
-          .join('')
-      );
+      message
+        .edit(
+          content[1]
+            .replace(/u:/g, 'ü')
+            .replace(/U:/g, 'Ü')
+            .split(/([a-zü]+[0-9]+)/gi)
+            .map(addTone)
+            .join('')
+        )
+        .catch(err => {
+          console.log(err);
+          message.edit(
+            `${message.content}\n` +
+            `\`\`\`${err.message}\`\`\``
+          );
+        });
     });
   }
 };

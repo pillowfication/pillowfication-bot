@@ -7,7 +7,7 @@ module.exports = {
       if (message.author.id !== me.id)
         return;
       const _code = message.content.match(_regex);
-      if (!_code)
+      if (!_code || !_code[1])
         return;
 
       let _output;
@@ -17,11 +17,19 @@ module.exports = {
         _output = e;
       }
 
-      message.edit(
-        `${me.prefix}eval\n` +
-        `\`\`\`js\n${_code[1]}\n\`\`\`\n` +
-        `\`\`\`js\n${_output}\n\`\`\``
-      );
+      message
+        .edit(
+          `${me.prefix}eval\n` +
+          `\`\`\`js\n${_code[1]}\n\`\`\`\n` +
+          `\`\`\`js\n${_output}\n\`\`\``
+        )
+        .catch(err => {
+          console.log(err);
+          message.edit(
+            `${message.content}\n` +
+            `\`\`\`${err.message}\`\`\``
+          );
+        });
     });
   }
 };
