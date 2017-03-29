@@ -20,7 +20,7 @@ module.exports = {
       message
         .edit(
           `${me.prefix}eval\n` +
-          `\`\`\`js\n${_code[1]}\n\`\`\`\n` +
+          `\`\`\`js\n${_code[1]}\n\`\`\`` + // Don't put a '\n' here please
           `\`\`\`js\n${_output}\n\`\`\``
         )
         .catch(err => {
