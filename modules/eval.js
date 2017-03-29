@@ -1,7 +1,7 @@
 module.exports = {
   init(me) {
     // '_'-prefix variables to prevent accidental `eval` abuse
-    const _regex = new RegExp(`^${me.prefix}eval\\s+\`(.*?)\``);
+    const _regex = new RegExp(`^${me.prefix}eval\\s+\`\`\`(.*)\`\`\``);
 
     me.on('message', message => {
       if (message.author.id !== me.id)
@@ -17,7 +17,11 @@ module.exports = {
         _output = e;
       }
 
-      message.edit(`${message.content}\n\`\`\`js\n${_output}\n\`\`\``);
+      message.edit(
+        `${me.prefix}eval\n` +
+        `\`\`\`js\n${_code[1]}\n\`\`\`\n` +
+        `\`\`\`js\n${_output}\n\`\`\``
+      );
     });
   }
 };

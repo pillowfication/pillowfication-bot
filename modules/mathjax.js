@@ -7,7 +7,7 @@ mathjax.config({displayErrors: true});
 
 module.exports = {
   init(me) {
-    const regex = new RegExp(`^${me.prefix}math\\s+\`(.*?)\``);
+    const regex = new RegExp(`^${me.prefix}math\\s+\`(.*)\``);
 
     me.on('message', message => {
       if (message.author.id !== me.id)
@@ -25,8 +25,8 @@ module.exports = {
           width: parseFloat(data.width) * EX || 10,
           height: parseFloat(data.height) * EX || 10
         }).then(buffer => {
-          message.channel.sendFile(buffer);
-        });
+          return message.channel.sendFile(buffer);
+        }).catch(console.log.bind(console));
       });
     });
   }
