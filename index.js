@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const Constants = require('discord.js/src/util/Constants');
 const config = require('./config.json');
+const winston = require('winston');
 
 const me = new Discord.Client();
 me.id = '144761456645242880';
@@ -17,7 +18,7 @@ me.prefix = '~/';
 .forEach(mod => mod.init(me));
 
 me.on('ready', () => {
-  console.log('Userbot ready.');
+  winston.info('Userbot ready.');
 });
 
 me.loginEmailPassword = function(email, password) {
@@ -34,9 +35,9 @@ me.loginEmailPassword = function(email, password) {
 
 me.loginEmailPassword(config.email, config.password)
   .then(() =>
-    console.log('Userbot logged in.')
+    winston.info('Userbot logged in.')
   )
   .catch(err => {
-    console.log(err);
+    winston.error('Could not log in', err);
     process.exit(1);
   });

@@ -1,5 +1,6 @@
 const mathjax = require('mathjax-node');
 const svg2png = require('svg2png');
+const winston = require('winston');
 
 const EX = 12;
 
@@ -43,7 +44,7 @@ module.exports = {
           message.channel.sendFile(buffer)
         )
         .catch(err => {
-          console.log(err);
+          winston.error('Could not generate TeX or send it', err);
           message.edit(
             `${message.content}\n` +
             `\`\`\`${err.message}\`\`\``

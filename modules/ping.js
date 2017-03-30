@@ -1,3 +1,5 @@
+const winston = require('winston');
+
 module.exports = {
   init(me) {
     me.on('message', message => {
@@ -6,12 +8,14 @@ module.exports = {
       if (message.content !== `${me.prefix}ping`)
         return;
 
+      winston.info(message.content);
+
       message.edit(`${message.content} pong`)
         .then(message =>
           message.edit(`${message.content} ${message.editedTimestamp - message.createdTimestamp}ms`)
         )
         .catch(err => {
-          console.log(err);
+          winston.error('Could not edit message', err);
           message.edit(
             `${message.content}\n` +
             `\`\`\`${err.message}\`\`\``

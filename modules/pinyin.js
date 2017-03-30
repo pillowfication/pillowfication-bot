@@ -1,3 +1,5 @@
+const winston = require('winston');
+
 const tones = {
   a: {1: 'ā', 2: 'á', 3: 'ǎ', 4: 'à'},
   e: {1: 'ē', 2: 'é', 3: 'ě', 4: 'è'},
@@ -61,6 +63,8 @@ module.exports = {
       if (!content || !content[1])
         return;
 
+      winston.info(message.content);
+
       message
         .edit(
           content[1]
@@ -71,7 +75,7 @@ module.exports = {
             .join('')
         )
         .catch(err => {
-          console.log(err);
+          winston.error('Could not edit message', err);
           message.edit(
             `${message.content}\n` +
             `\`\`\`${err.message}\`\`\``

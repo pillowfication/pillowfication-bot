@@ -1,3 +1,5 @@
+const winston = require('winston');
+
 module.exports = {
   init(me) {
     // '_'-prefix variables to prevent accidental `eval` abuse
@@ -19,12 +21,12 @@ module.exports = {
 
       message
         .edit(
-          `${me.prefix}eval\n` +
+          `${me.prefix}eval` +
           `\`\`\`js\n${_code[1]}\n\`\`\`` + // Don't put a '\n' here please
           `\`\`\`js\n${_output}\n\`\`\``
         )
         .catch(err => {
-          console.log(err);
+          winston.error('Could not edit message', err);
           message.edit(
             `${message.content}\n` +
             `\`\`\`${err.message}\`\`\``

@@ -1,7 +1,7 @@
-const _ = require('lodash');
 const path = require('path');
 const url = require('url');
 const RichEmbed = require('discord.js').RichEmbed;
+const winston = require('winston');
 
 const 심장 = '❤';
 const board = '296712646559006721';
@@ -16,6 +16,8 @@ module.exports = {
         return;
       if (messageReaction.emoji.name !== 심장)
         return;
+
+      winston.info('Simjang\'d a message');
 
       const message = messageReaction.message;
       const embed = new RichEmbed();
@@ -61,7 +63,7 @@ module.exports = {
         try {
           return extensions.has(path.extname((new url.URL(attachment.url)).pathname));
         } catch (err) {
-          console.log(err);
+          winston.error('Image attachment had bad URL', err);
           return false;
         }
       }))
@@ -74,7 +76,7 @@ module.exports = {
             if (extensions.has(path.extname((new url.URL(link[0])).pathname)))
               image = link[0];
           } catch (err) {
-            console.log(err);
+            winston.error('Link found had bad URL', err);
           }
       }
 
@@ -85,7 +87,7 @@ module.exports = {
       me.channels.get(board)
         .sendEmbed(embed)
         .catch(err => {
-          console.log(err);
+          winston.error('Couldn\'t send embed to #simjang', err);
         });
     });
   }
