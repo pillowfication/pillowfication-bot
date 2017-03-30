@@ -11,12 +11,13 @@ me.prefix = '~/';
   require('./modules/exit'),
   require('./modules/mathjax'),
   require('./modules/ping'),
-  require('./modules/pinyin')
+  require('./modules/pinyin'),
+  require('./modules/simjang')
 ]
 .forEach(mod => mod.init(me));
 
 me.on('ready', () => {
-  console.log('userbot online');
+  console.log('Userbot ready.');
 });
 
 me.loginEmailPassword = function(email, password) {
@@ -31,4 +32,11 @@ me.loginEmailPassword = function(email, password) {
   });
 };
 
-me.loginEmailPassword(config.email, config.password);
+me.loginEmailPassword(config.email, config.password)
+  .then(() =>
+    console.log('Userbot logged in.')
+  )
+  .catch(err => {
+    console.log(err);
+    process.exit(1);
+  });
