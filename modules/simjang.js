@@ -12,7 +12,7 @@ const linkRegex = /https?:\/\/(?:\w+\.)?[\w-]+\.[\w]{2,3}(?:\/w-_\.]+)+\.(?:png|
 module.exports = {
   init(me) {
     me.on('messageReactionAdd', (messageReaction, user) => {
-      if (user.id !== me.id)
+      if (user.id !== me.id && user.id !== '179314569594929152') // TODO: Eva
         return;
       if (messageReaction.emoji.name !== 심장)
         return;
